@@ -15,10 +15,26 @@ public class UserSer {
 
 	@Autowired
 	UserRepo userRepo;
+	
+	
 
-	public String register(user_table user) {
-		userRepo.save(user);
-		return "Successfully added";
+	public ResponseEntity<String> register(user_table user, String roles) {
+		if(userRepo.findByusername(user.getUsername()).isPresent()) {
+			throw new RuntimeException("username already exits");
+		}
+		else if(userRepo.findByemail(user.getEmail())!=null){
+			throw new RuntimeException("email already exits");
+		}
+		else {
+			if(roles.equalsIgnoreCase("ADMIN")) {
+				user.setRoles("ADMIN");
+			}
+			else {
+				user.setRoles("CUSTOMER");
+			}
+			userRepo.save(user);
+			return new ResponseEntity<String> ("USER SAVED", HttpStatus.OK);
+		}
 	}
 
 	public ResponseEntity<String> login(String username, String password) {

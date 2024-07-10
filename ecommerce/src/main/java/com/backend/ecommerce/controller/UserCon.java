@@ -20,37 +20,42 @@ import com.backend.ecommerce.service.UserSer;
 @RestController
 @RequestMapping("/user")
 public class UserCon {
-	
+
 	@Autowired
 	UserSer userSer;
-	
-	@PostMapping("/register")
-	public ResponseEntity<String> register(@RequestBody user_table user){
-		try {
-		return new ResponseEntity<String> (userSer.register(user), HttpStatus.OK);
-		}
-		catch(Exception e)
-		{
-			return new ResponseEntity<String> ("couldnt add exception occured", HttpStatus.BAD_GATEWAY);
-		}
+
+	@PostMapping("/register/admin")
+	public ResponseEntity<String> registerAdmin(@RequestBody user_table user) {
+
+		return userSer.register(user, "ADMIN");
+
 	}
+
+	@PostMapping("/register/customer")
+	public ResponseEntity<String> register(@RequestBody user_table user) {
+
+		return userSer.register(user, "CUSTOMER");
+
+	}
+
 	@GetMapping("/login")
-	public ResponseEntity<String> login(@RequestParam String username, @RequestParam String password){
-		try{
-			return userSer.login(username,password);
+	public ResponseEntity<String> login(@RequestParam String username, @RequestParam String password) {
+		try {
+			return userSer.login(username, password);
+		} catch (Exception e) {
+			return new ResponseEntity<String>("couldnt add exception occured", HttpStatus.BAD_GATEWAY);
 		}
-		catch(Exception e) {
-			return new ResponseEntity<String> ("couldnt add exception occured", HttpStatus.BAD_GATEWAY);
-		}
-		
+
 	}
+
 	@PutMapping("/update/{username}")
-	public ResponseEntity<Optional<user_table>> update(@PathVariable String username, @RequestBody user_table user){
-		return userSer.update(username,user);
+	public ResponseEntity<Optional<user_table>> update(@PathVariable String username, @RequestBody user_table user) {
+		return userSer.update(username, user);
 	}
+
 	@PutMapping("/reset/{username}")
-	public ResponseEntity<String> reset(@PathVariable String username ,@RequestParam String password){
-		return userSer.reset(username,password);
+	public ResponseEntity<String> reset(@PathVariable String username, @RequestParam String password) {
+		return userSer.reset(username, password);
 	}
 
 }

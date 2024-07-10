@@ -40,14 +40,19 @@ public class ProdSer {
 		}
 		
 	}
-	public ResponseEntity<List<Product_table>> searchByCategory(String catgeory){
-		Category cat=catRepo.findByName(catgeory);
-		Long id=cat.getcategory_id();		
+	public ResponseEntity<List<Product_table>> searchByCategory(String category){
+		Category cat=catRepo.findByName(category);
+		if(cat!=null) {
+		Long categoryId=cat.getcategory_id();		
 		try {
-		return ResponseEntity.ok(prodRepo.findBycategory_id(id));
+		return ResponseEntity.ok(prodRepo.findBycategoryId(categoryId));
 		}
 		catch(Exception e) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+		}
+		}
+		else {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
 		}
 		
 	}

@@ -20,6 +20,7 @@ public class user_table {
 	private String last_name;
 	private String address;
 	private String phone_number;
+	
 	private String roles;
 	
 	public Long getUser_id() {
@@ -64,6 +65,7 @@ public class user_table {
 	public void setPhone_number(String phone_number) {
 		this.phone_number = phone_number;
 	}
+	
 	public String getRoles() {
 		return roles;
 	}

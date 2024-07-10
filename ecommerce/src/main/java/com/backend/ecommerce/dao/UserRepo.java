@@ -11,5 +11,6 @@ import com.backend.ecommerce.model.user_table;
 public interface UserRepo extends JpaRepository<user_table, Long> {
 	
 	Optional<user_table> findByusername(String username);
+	user_table findByemail(String email);
 	user_table findByUsernameAndRoles(String username, String roles);
 }

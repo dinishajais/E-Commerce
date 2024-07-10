@@ -11,5 +11,5 @@ import com.backend.ecommerce.model.Product_table;
 public interface ProdRepo extends JpaRepository<Product_table, Long> {
 	
 	List<Product_table> findByNameContainingIgnoreCase(String name);
-	List<Product_table> findBycategory_id(Long id);
+	List<Product_table> findBycategoryId(Long categoryId);
 }
